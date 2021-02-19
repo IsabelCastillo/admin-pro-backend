@@ -9,17 +9,18 @@ const app = express();
 // Configurar CORS
 app.use(cors());
 
+// Lectura y parseo del body (debe esta antes de sus rutas)
+app.use(express.json());
+
 // Base de datos
 dbConnection();
 // console.log(process.env)
 
 // Rutas
-app.get('/', (req, res) =>{
-    res.status(200).json({
-        ok:true,
-        msg:'Hola Mundo'
-    })
-});
+app.use('/api/usuarios', require('./routes/usuarios'));
+app.use('/api/login', require('./routes/auth'))
+
+
  
 // para levantarlo
 app.listen(process.env.PORT, () => {
